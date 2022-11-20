@@ -57,7 +57,7 @@ int main() {
   //speed limit
   double ref_vel = 0.0; //mph;
 
-  double speed_diff = 0.5;
+  double speed_diff = 0.224;
   const double max_speed = 49;
   
 
@@ -113,13 +113,21 @@ int main() {
           bool car_left = false;
           bool car_ahead = false;
           bool car_right = false;
+          double check_speed;
+          double check_car_s;
           
+                    
           for(int i=0;i<sensor_fusion.size();i++){
 
             float d = sensor_fusion[i][6];
-            int check_car_lane = -1; 
+            int check_car_lane; 
+            double vx = sensor_fusion[i][3];
+            double vy = sensor_fusion[i][4];
+            check_speed = sqrt(vx*vx+vy*vy);
+            check_car_s = sensor_fusion[i][5];
+            check_car_s += ((double)prev_size*.02*check_speed); 
 
-            if(d>0 && d<4){
+            if(d>0 && d<4 ){
               check_car_lane = 0;
             }
 
@@ -130,44 +138,42 @@ int main() {
             else if(d>8){
               check_car_lane = 2;
             }
-
-            double vx = sensor_fusion[i][3];
-            double vy = sensor_fusion[i][4];
-            double check_speed = sqrt(vx*vx+vy*vy);
-            double check_car_s = sensor_fusion[i][5];
-            check_car_s += ((double)prev_size*.02*check_speed); //predict where will the other car will be
+            else{
+              check_car_lane = -99;
+            }
 
             if (check_car_lane == lane){
-              if(check_car_s>car_s && check_car_s-car_s<30){
+              if(check_car_s>car_s && check_car_s-car_s<30 && check_speed<car_speed){
                 car_ahead = true;
               }               
             }
 
             else if (check_car_lane - lane == -1){
-              if(check_car_s>car_s-30 && check_car_s<car_s+30){
+              if(check_car_s>car_s-50 && check_car_s<car_s+50){
                 car_left = true;
               }
             }
 
             else if (check_car_lane - lane == 1){
-              if(check_car_s>car_s-30 && check_car_s<car_s+30){
+              if(check_car_s>car_s-50 && check_car_s<car_s+50){
                 car_right = true;
               }
             } 
           }    
           //===========================================================================
           //END PREDICTION
+          
 
 
           //BEHAVIOR
           //===========================================================================
           if(car_ahead == true){ //there is a slow car ahead
-            if(lane > 0 && car_left == false){ //if ego car is not on lane 0  and left lane has not car nearby
-              lane = lane - 1;  //change lane to left
+            if(lane == 0 && car_right == false){ //if ego car is not on lane 0  and left lane has not car nearby
+              lane = lane + 1;  //change lane to left
             }
             
-            else if(lane != 2 && car_right == false){
-              lane = lane + 1;
+            else if(lane == 2 && car_left == false){
+              lane = lane - 1;
             }
 
             else if(lane == 1 && car_left == false){
@@ -177,11 +183,11 @@ int main() {
               lane = lane + 1;
             }
 
-            else{
+            else{              
               ref_vel = ref_vel - speed_diff;
+              }              
             }
-          }
-
+            
           else if(ref_vel < max_speed){
               ref_vel = ref_vel + speed_diff;
           }
