@@ -24,7 +24,6 @@ This module use couple of `if..` to check all kinds of situation.
 If in front of ego car, there is a slow car within 30 meters, we might need to consider to change the lane. So we list out conditions that the ego car can change the lane:
 
 * If ego car is on lane 0 (can not change to left), and there is no car within -50 to 50 range on the RIGHT lane, then change to RIGHT lane.
-
 * If ego car is on lane 2 (can not change to right), and there is no car within -50 to 50 range on the LEFT lane, then change to LEFT lane.
 * If ego car is on lane 1, and there is no car within -50 to 50 range on the LEFT lane, then change to LEFT lane.
 * If ego car is on lane 2, and there is no car within -50 to 50 range on the RIGHT lane, then change to RIGHT lane.
