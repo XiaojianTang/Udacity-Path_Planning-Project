@@ -1,4 +1,4 @@
-# 项目概述
+# 目概述
 
 本项目来源于 Udacity 自动驾驶课程中的**路径规划项目**。通过简单的简单的算法，实现车辆在高速公路上按限速（50MPH）自主行驶，并能在前方车辆较慢时能自主刹车，和前车保持安全距离，必要时候能够实现变道。同时需要在减速、变道和加速时保证车辆行驶轨迹可行且满足行驶舒适的要求。其中道路信息（`/data/highway_map.csv`）、定位数据和对周边车辆的感知融合的数据（由模拟器提供）已由课程项目提供。
 
@@ -24,7 +24,7 @@
 * 模拟器：可以点击[这里](https://github.com/udacity/self-driving-car-sim/releases/tag/T3_v1.2)下载
 * 开发环境：因程序通过 uWebsocket 与模拟器相连，uWebsocket 需要Linux下运行，因此需要在 Linux 系统中运行项目，可下载Udacity提供的[虚拟机](https://s3-us-west-1.amazonaws.com/udacity-selfdrivingcar/Udacity_VM_Base_V1.0.0.zip)，或自行安装其他虚拟机并运行 Ubuntu 系统
 
-项目所需的依赖库在 install-ubuntu.sh 中，可通过命令行` ./install-ubuntun.sh` 进行安装。
+项目所需的依赖库在 install-ubuntu.sh 中，可通过命令行 ` ./install-ubuntun.sh` 进行安装。
 
 > 注意，如使用虚拟机，需要注意设置端口转发，模拟器和虚拟机的配置可参考同样来自于Udacity自动驾驶课程中的 Capstone 项目，可点击[这里](https://github.com/XiaojianTang/Udacity-Selfdriving-Capstone-Project)跳转至该项目仓库。
 
@@ -289,4 +289,4 @@ for( int i = 1; i < 50 - prev_size; i++ ) {
 
 最后在模拟器中运行效果如下图，绿色小球为规划生成的路径点：
 
-![1668934061429](image/MODELDOCUMENTATION/1668934061429.png)
+![1670759594827](image/README/1670759594827.png)
